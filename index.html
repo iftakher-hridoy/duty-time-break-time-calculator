@@ -1,13 +1,14 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Daily Duty &amp; Break Time Calculator</title>
-<meta name="description" content="Free, open-source daily duty and break time calculator. Works offline, no sign-up, data stays in your browser." />
+<title>Daily Duty &amp; Break Time Calculator | দৈনিক ডিউটি ও ব্রেক ক্যালকুলেটর</title>
+<meta name="description" content="Free, open-source daily duty and break time calculator in Bangla and English. Works offline, no sign-up, data stays in your browser." />
 <style>body{margin:0;padding:12px;background:#0c1428}</style>
 </head>
 <body>
+<!-- Daily Duty & Break Time Calculator (Bangla / English) -->
 <div id="dtc">
 <style type="text/css">
 /*<![CDATA[*/
@@ -52,57 +53,93 @@ box-shadow:0 3px 0 #b6bfd2,0 9px 14px rgba(20,33,61,.22);transition:transform .1
 #dtc .empty{padding:18px;color:var(--mut);text-align:center}
 @media (prefers-reduced-motion:reduce){#dtc *{transition:none!important}#dtc .stat:hover{transform:none}}
 @media print{#dtc .noprint{display:none!important}#dtc,#dtc .card,#dtc .stat{background:#fff!important;box-shadow:none!important}#dtc h2,#dtc .sub{color:#000;text-shadow:none}#dtc th{background:#eee;color:#000;text-shadow:none}}
+#dtc .credit{margin:4px 0 0;text-align:center;color:#c5d0ea;font-size:.92rem}
+#dtc .credit a{color:#ffd24a;font-weight:700;text-decoration:none;text-shadow:0 2px 0 rgba(0,0,0,.4);border-bottom:2px solid rgba(255,210,74,.45);padding-bottom:1px;transition:color .15s,border-color .15s}
+#dtc .credit a:hover{color:#fff;border-color:#fff}
+#dtc .top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:18px}
+#dtc .top>div:first-child{flex:1 1 260px;min-width:0}
+#dtc .top .sub{margin-bottom:0}
+#dtc .lang{display:inline-flex;gap:8px}
+#dtc .lang button{padding:6px 13px;font-size:.88rem}
+#dtc .lang button.on{background:linear-gradient(180deg,#ffd24a,#f2b705);border-color:#c98f00;color:#2a1d00;font-weight:700;box-shadow:0 4px 0 #a87500,0 8px 14px rgba(0,0,0,.3)}
 /*]]>*/
 </style>
-
-<h2>দৈনিক ডিউটি ও ব্রেক ক্যালকুলেটর</h2>
-<p class="sub">এন্ট্রি ও এক্সিট সময় দিন, দুইটি ব্রেক বাদ দিয়ে প্রকৃত ডিউটি দেখুন। রাতের শিফটও কাজ করবে।</p>
+<div class="top">
+  <div><h2 data-i18n="title"></h2><p class="sub" data-i18n="sub"></p></div>
+  <div class="lang noprint" role="group" aria-label="Language">
+    <button type="button" data-l="bn">বাংলা</button>
+    <button type="button" data-l="en">English</button>
+  </div>
+</div>
 
 <div class="card noprint">
   <div class="grid">
-    <div><label for="dtc-date">তারিখ</label><input type="date" id="dtc-date" /></div>
-    <div><label for="dtc-in">এন্ট্রি সময়</label><input type="time" id="dtc-in" /></div>
-    <div><label for="dtc-out">এক্সিট সময়</label><input type="time" id="dtc-out" /></div>
-    <div><label for="dtc-b1">ব্রেক ১ (মিনিট)</label><input type="number" id="dtc-b1" min="0" value="0" /></div>
-    <div><label for="dtc-b2">ব্রেক ২ (মিনিট)</label><input type="number" id="dtc-b2" min="0" value="0" /></div>
-    <div><label for="dtc-target">দৈনিক লক্ষ্য (ঘণ্টা)</label><input type="number" id="dtc-target" min="1" step="0.5" value="8" /></div>
+    <div><label for="dtc-date" data-i18n="date"></label><input type="date" id="dtc-date" /></div>
+    <div><label for="dtc-in" data-i18n="in"></label><input type="time" id="dtc-in" /></div>
+    <div><label for="dtc-out" data-i18n="out"></label><input type="time" id="dtc-out" /></div>
+    <div><label for="dtc-b1" data-i18n="b1"></label><input type="number" id="dtc-b1" min="0" value="0" /></div>
+    <div><label for="dtc-b2" data-i18n="b2"></label><input type="number" id="dtc-b2" min="0" value="0" /></div>
+    <div><label for="dtc-target" data-i18n="target"></label><input type="number" id="dtc-target" min="1" step="0.5" value="8" /></div>
   </div>
-  <div class="live" id="dtc-live" aria-live="polite">সময় দিলে এখানে প্রকৃত ডিউটি দেখা যাবে।</div>
+  <div class="live" id="dtc-live" aria-live="polite"></div>
   <div class="row">
-    <button class="pri" id="dtc-add">এন্ট্রি যোগ করুন</button>
-    <button id="dtc-clear">ফর্ম পরিষ্কার</button>
+    <button type="button" class="pri" id="dtc-add" data-i18n="add"></button>
+    <button type="button" id="dtc-clear" data-i18n="clear"></button>
   </div>
 </div>
 
-<div class="card">
-  <div class="stats" id="dtc-stats"></div>
-</div>
+<div class="card"><div class="stats" id="dtc-stats"></div></div>
 
 <div class="card">
   <div class="wrap"><table>
-    <thead><tr><th>তারিখ</th><th>এন্ট্রি</th><th>এক্সিট</th><th>মোট</th><th>ব্রেক</th><th>প্রকৃত ডিউটি</th><th>লক্ষ্যের তুলনায়</th><th class="noprint"></th></tr></thead>
+    <thead><tr><th data-i18n="th_date"></th><th data-i18n="th_in"></th><th data-i18n="th_out"></th><th data-i18n="th_total"></th><th data-i18n="th_break"></th><th data-i18n="th_real"></th><th data-i18n="th_vs"></th><th class="noprint"></th></tr></thead>
     <tbody id="dtc-body"></tbody>
   </table></div>
   <div class="row noprint">
-    <button id="dtc-csv">CSV ডাউনলোড</button>
-    <button id="dtc-json">JSON ডাউনলোড</button>
-    <button id="dtc-print">প্রিন্ট</button>
-    <button id="dtc-reset">সব মুছুন</button>
+    <button type="button" id="dtc-csv" data-i18n="csv"></button>
+    <button type="button" id="dtc-json" data-i18n="json"></button>
+    <button type="button" id="dtc-print" data-i18n="print"></button>
+    <button type="button" id="dtc-reset" data-i18n="reset"></button>
   </div>
 </div>
+
+<p class="credit">Powered by <a href="https://iftakher-hridoy.blogspot.com/" target="_blank" rel="noopener">iFTAKHER_HRiDOY</a></p>
 
 <script type="text/javascript">
 //<![CDATA[
 (function(){
-  var KEY='dtc_entries_v1',TKEY='dtc_target_v1';
+  var KEY='dtc_entries_v1',TKEY='dtc_target_v1',LKEY='dtc_lang_v1';
   var $=function(i){return document.getElementById('dtc-'+i)};
+  var T={
+    bn:{title:'দৈনিক ডিউটি ও ব্রেক ক্যালকুলেটর',sub:'এন্ট্রি ও এক্সিট সময় দিন, দুইটি ব্রেক বাদ দিয়ে প্রকৃত ডিউটি দেখুন। রাতের শিফটও কাজ করবে।',
+      date:'তারিখ','in':'এন্ট্রি সময়',out:'এক্সিট সময়',b1:'ব্রেক ১ (মিনিট)',b2:'ব্রেক ২ (মিনিট)',target:'দৈনিক লক্ষ্য (ঘণ্টা)',
+      add:'এন্ট্রি যোগ করুন',clear:'ফর্ম পরিষ্কার',th_date:'তারিখ',th_in:'এন্ট্রি',th_out:'এক্সিট',th_total:'মোট',th_break:'ব্রেক',th_real:'প্রকৃত ডিউটি',th_vs:'লক্ষ্যের তুলনায়',
+      csv:'CSV ডাউনলোড',json:'JSON ডাউনলোড',print:'প্রিন্ট',reset:'সব মুছুন',del:'মুছুন',
+      hint:'সময় দিলে এখানে প্রকৃত ডিউটি দেখা যাবে।',over:'ব্রেক মোট সময়ের চেয়ে বেশি হয়েছে — মান যাচাই করুন।',
+      total:'মোট',brk:'ব্রেক',real:'প্রকৃত ডিউটি',h:' ঘ ',m:' মি',
+      s_days:'মোট দিন',s_real:'মোট প্রকৃত ডিউটি',s_avg:'দৈনিক গড়',s_br:'মোট ব্রেক',s_diff:'লক্ষ্যের তুলনায় (ওভারটাইম / ঘাটতি)',
+      empty:'এখনও কোনো এন্ট্রি নেই। উপরের ফর্ম থেকে প্রথম দিনের ডিউটি যোগ করুন।',
+      a_fill:'তারিখ, এন্ট্রি ও এক্সিট সময় দিন।',a_neg:'ব্রেক মোট সময়ের চেয়ে বেশি। মান ঠিক করুন।',c_rep:'এই তারিখের এন্ট্রি আছে। বদলে দেবেন?',c_all:'সব এন্ট্রি মুছে যাবে। নিশ্চিত?'},
+    en:{title:'Daily Duty & Break Time Calculator',sub:'Enter your entry and exit time, subtract two breaks and see your real duty. Night shifts work too.',
+      date:'Date','in':'Entry time',out:'Exit time',b1:'Break 1 (min)',b2:'Break 2 (min)',target:'Daily target (hours)',
+      add:'Add entry',clear:'Clear form',th_date:'Date',th_in:'Entry',th_out:'Exit',th_total:'Total',th_break:'Break',th_real:'Real duty',th_vs:'vs target',
+      csv:'Download CSV',json:'Download JSON',print:'Print',reset:'Delete all',del:'Delete',
+      hint:'Enter the times to see your real duty here.',over:'Breaks are longer than the total time. Please check the values.',
+      total:'Total',brk:'Breaks',real:'Real duty',h:'h ',m:'m',
+      s_days:'Total days',s_real:'Total real duty',s_avg:'Daily average',s_br:'Total breaks',s_diff:'vs target (overtime / shortfall)',
+      empty:'No entries yet. Add your first day using the form above.',
+      a_fill:'Please enter the date, entry time and exit time.',a_neg:'Breaks are longer than the total time. Please fix the values.',c_rep:'An entry for this date exists. Replace it?',c_all:'All entries will be deleted. Are you sure?'}
+  };
+  var lang='en';
+  try{var sl=localStorage.getItem(LKEY);lang=(sl==='bn'||sl==='en')?sl:((navigator.language||'').toLowerCase().indexOf('bn')===0?'bn':'en')}catch(e){}
+  var L=function(k){return T[lang][k]};
   var entries=[];
   try{entries=JSON.parse(localStorage.getItem(KEY)||'[]')}catch(e){entries=[]}
   try{var t=localStorage.getItem(TKEY);if(t)$('target').value=t}catch(e){}
   $('date').value=new Date().toISOString().slice(0,10);
 
   function toMin(s){var p=s.split(':');return +p[0]*60+ +p[1]}
-  function fmt(m){var s=m<0?'-':'';m=Math.abs(Math.round(m));return s+Math.floor(m/60)+' ঘ '+('0'+(m%60)).slice(-2)+' মি'}
+  function fmt(m){var s=m<0?'-':'';m=Math.abs(Math.round(m));return s+Math.floor(m/60)+L('h')+('0'+(m%60)).slice(-2)+L('m')}
   function calc(inT,outT,b1,b2){
     if(!inT||!outT)return null;
     var a=toMin(inT),b=toMin(outT);
@@ -115,36 +152,49 @@ box-shadow:0 3px 0 #b6bfd2,0 9px 14px rgba(20,33,61,.22);transition:transform .1
 
   function live(){
     var r=calc($('in').value,$('out').value,$('b1').value,$('b2').value);
-    $('live').textContent=r?(r.real<0?'ব্রেক মোট সময়ের চেয়ে বেশি হয়েছে — মান যাচাই করুন।':'মোট '+fmt(r.total)+' − ব্রেক '+fmt(r.br)+' = প্রকৃত ডিউটি '+fmt(r.real)):'সময় দিলে এখানে প্রকৃত ডিউটি দেখা যাবে।';
+    $('live').textContent=!r?L('hint'):(r.real<0?L('over'):L('total')+' '+fmt(r.total)+' − '+L('brk')+' '+fmt(r.br)+' = '+L('real')+' '+fmt(r.real));
   }
 
   function render(){
     entries.sort(function(a,b){return a.date<b.date?-1:a.date>b.date?1:0});
     var tg=targetMin(),body=$('body'),sumReal=0,sumBr=0,sumDiff=0;
-    if(!entries.length){body.innerHTML='<tr><td colspan="8" class="empty">এখনও কোনো এন্ট্রি নেই। উপরের ফর্ম থেকে প্রথম দিনের ডিউটি যোগ করুন।</td></tr>'}
+    if(!entries.length){body.innerHTML='<tr><td colspan="8" class="empty">'+L('empty')+'</td></tr>'}
     else body.innerHTML=entries.map(function(e,i){
       var d=e.real-tg;sumReal+=e.real;sumBr+=e.br;sumDiff+=d;
-      return '<tr><td>'+e.date+'</td><td>'+e.inT+'</td><td>'+e.outT+'</td><td>'+fmt(e.total)+'</td><td>'+fmt(e.br)+'</td><td><b>'+fmt(e.real)+'</b></td><td class="'+(d>=0?'pos':'neg')+'">'+(d>=0?'+':'')+fmt(d)+'</td><td class="noprint"><button data-i="'+i+'">মুছুন</button></td></tr>';
+      return '<tr><td>'+e.date+'</td><td>'+e.inT+'</td><td>'+e.outT+'</td><td>'+fmt(e.total)+'</td><td>'+fmt(e.br)+'</td><td><b>'+fmt(e.real)+'</b></td><td class="'+(d>=0?'pos':'neg')+'">'+(d>=0?'+':'')+fmt(d)+'</td><td class="noprint"><button type="button" data-i="'+i+'">'+L('del')+'</button></td></tr>';
     }).join('');
     var n=entries.length;
     $('stats').innerHTML=
-      '<div class="stat"><b>'+n+'</b><span>মোট দিন</span></div>'+
-      '<div class="stat"><b>'+fmt(sumReal)+'</b><span>মোট প্রকৃত ডিউটি</span></div>'+
-      '<div class="stat"><b>'+fmt(n?sumReal/n:0)+'</b><span>দৈনিক গড়</span></div>'+
-      '<div class="stat"><b>'+fmt(sumBr)+'</b><span>মোট ব্রেক</span></div>'+
-      '<div class="stat"><b class="'+(sumDiff>=0?'pos':'neg')+'">'+(sumDiff>=0?'+':'')+fmt(sumDiff)+'</b><span>লক্ষ্যের তুলনায় (ওভারটাইম / ঘাটতি)</span></div>';
+      '<div class="stat"><b>'+n+'</b><span>'+L('s_days')+'</span></div>'+
+      '<div class="stat"><b>'+fmt(sumReal)+'</b><span>'+L('s_real')+'</span></div>'+
+      '<div class="stat"><b>'+fmt(n?sumReal/n:0)+'</b><span>'+L('s_avg')+'</span></div>'+
+      '<div class="stat"><b>'+fmt(sumBr)+'</b><span>'+L('s_br')+'</span></div>'+
+      '<div class="stat"><b class="'+(sumDiff>=0?'pos':'neg')+'">'+(sumDiff>=0?'+':'')+fmt(sumDiff)+'</b><span>'+L('s_diff')+'</span></div>';
   }
+
+  function setLang(l,persist){
+    lang=l;
+    if(persist){try{localStorage.setItem(LKEY,l)}catch(e){}}
+    var root=document.getElementById('dtc');
+    var els=root.querySelectorAll('[data-i18n]');
+    for(var i=0;i<els.length;i++){els[i].textContent=L(els[i].getAttribute('data-i18n'))}
+    var bs=root.querySelectorAll('.lang button');
+    for(var j=0;j<bs.length;j++){var on=bs[j].getAttribute('data-l')===l;bs[j].className=on?'on':'';bs[j].setAttribute('aria-pressed',on?'true':'false')}
+    render();live();
+  }
+  var lb=document.querySelectorAll('#dtc .lang button');
+  for(var q=0;q<lb.length;q++){lb[q].addEventListener('click',function(){setLang(this.getAttribute('data-l'),true)})}
 
   ['in','out','b1','b2'].forEach(function(k){$(k).addEventListener('input',live)});
   $('target').addEventListener('input',function(){save();render()});
 
   $('add').onclick=function(){
     var r=calc($('in').value,$('out').value,$('b1').value,$('b2').value);
-    if(!$('date').value||!r){alert('তারিখ, এন্ট্রি ও এক্সিট সময় দিন।');return}
-    if(r.real<0){alert('ব্রেক মোট সময়ের চেয়ে বেশি। মান ঠিক করুন।');return}
+    if(!$('date').value||!r){alert(L('a_fill'));return}
+    if(r.real<0){alert(L('a_neg'));return}
     var e={date:$('date').value,inT:$('in').value,outT:$('out').value,b1:+$('b1').value||0,b2:+$('b2').value||0,total:r.total,br:r.br,real:r.real};
     var ix=entries.findIndex(function(x){return x.date===e.date});
-    if(ix>-1){if(!confirm('এই তারিখের এন্ট্রি আছে। বদলে দেবেন?'))return;entries[ix]=e}else entries.push(e);
+    if(ix>-1){if(!confirm(L('c_rep')))return;entries[ix]=e}else entries.push(e);
     save();render();
   };
   $('clear').onclick=function(){['in','out'].forEach(function(k){$(k).value=''});$('b1').value=0;$('b2').value=0;live()};
@@ -152,7 +202,7 @@ box-shadow:0 3px 0 #b6bfd2,0 9px 14px rgba(20,33,61,.22);transition:transform .1
     var i=ev.target.getAttribute&&ev.target.getAttribute('data-i');
     if(i!==null&&i!==undefined){entries.splice(+i,1);save();render()}
   });
-  $('reset').onclick=function(){if(confirm('সব এন্ট্রি মুছে যাবে। নিশ্চিত?')){entries=[];save();render()}};
+  $('reset').onclick=function(){if(confirm(L('c_all'))){entries=[];save();render()}};
 
   function dl(name,text,type){
     var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([text],{type:type}));a.download=name;
@@ -165,7 +215,7 @@ box-shadow:0 3px 0 #b6bfd2,0 9px 14px rgba(20,33,61,.22);transition:transform .1
   };
   $('print').onclick=function(){window.print()};
 
-  render();live();
+  setLang(lang,false);
 })();
 //]]>
 </script>

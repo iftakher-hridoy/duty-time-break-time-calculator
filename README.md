@@ -14,6 +14,7 @@ A free, open-source, single-file web app that calculates your **real working hou
 
 ## ✨ Features
 
+- **Bilingual: বাংলা / English** switch (remembers your choice, auto-picks Bangla for Bengali browsers)
 - Entry time, exit time and **two separate breaks** (in minutes)
 - Live calculation: `Total − Breaks = Real duty`
 - **Night shifts** supported (e.g. 22:00 → 06:30)
@@ -29,13 +30,13 @@ A free, open-source, single-file web app that calculates your **real working hou
 2. Open `index.html` in any modern browser
 
 ```bash
-git clone https://github.com/<your-username>/duty-break-calculator.git
-cd duty-break-calculator
+git clone https://github.com/iftakher-hridoy/duty-time-break-time-calculator.git
+cd duty-time-break-time-calculator
 # just open index.html
 ```
 
 ### Host it free with GitHub Pages
-Repo **Settings → Pages → Deploy from a branch → `main` / root**. Your calculator will be live at `https://<your-username>.github.io/duty-break-calculator/`.
+Repo **Settings → Pages → Deploy from a branch → `main` / root**. Your calculator will be live at `https://iftakher-hridoy.github.io/duty-time-break-time-calculator/`.
 
 ## 📰 Use it on Blogger
 
@@ -72,6 +73,10 @@ Issues and pull requests are welcome. Ideas: month filter, per-shift presets, da
 ## 🔒 Privacy
 
 Everything runs in your browser. No data is sent anywhere. The only external request is the optional Google Fonts stylesheet (Hind Siliguri); remove the `@import` line to go fully offline.
+
+## 👤 Author
+
+Made by [iFTAKHER_HRiDOY](https://iftakher-hridoy.blogspot.com/). Please keep the "Powered by" credit line when you reuse or fork this project.
 
 ## 📄 License
 
